@@ -1,0 +1,62 @@
+const routes = [
+  {
+    path: "/",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/IndexPage.vue"),
+        meta: {
+          title: "Home",
+        },
+      },
+      {
+        path: "post/:slug",
+        component: () => import("pages/Post.vue"),
+        props: true,
+        meta: {
+          title: "Post",
+        },
+      },
+      {
+        path: "blog",
+        component: () => import("pages/Blog.vue"),
+        meta: {
+          title: "Blog",
+        },
+      },
+      {
+        path: "about",
+        component: () => import("pages/About.vue"),
+        meta: {
+          title: "About",
+        },
+      },
+      {
+        path: "profile/:slug",
+        component: () => import("pages/Profile.vue"),
+        props: true,
+        meta: {
+          title: "Profile",
+        },
+      },
+
+      {
+        path: "contact",
+        component: () => import("pages/Contact.vue"),
+        meta: {
+          title: "Contact",
+        },
+      },
+    ],
+  },
+
+  // Always leave this as last one,
+  // but you can also remove it
+  {
+    path: "/:catchAll(.*)*",
+    component: () => import("pages/ErrorNotFound.vue"),
+  },
+];
+
+export default routes;
