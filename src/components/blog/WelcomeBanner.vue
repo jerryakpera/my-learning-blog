@@ -1,12 +1,33 @@
 <template>
-  <q-card class="blog-wrapper no-user" flat square>
-    <div class="blog-content" :class="$q.screen.lt.md ? 'q-mb-xl' : ''">
-      <div :class="$q.screen.lt.sm ? 'q-pa-lg' : ''">
-        <div class="text-h3 q-ma-none q-pa-none">
+  <q-card class="blog-wrapper no-user bg-dark" flat square>
+    <div
+      class="blog-content bg-dark text-white"
+      :class="$q.screen.lt.md ? 'q-mb-xl' : ''"
+    >
+      <div :class="$q.screen.lt.md ? 'q-pa-lg' : ''">
+        <div
+          class="q-ma-none q-pa-none"
+          :class="
+            $q.screen.lt.sm
+              ? 'text-h5'
+              : $q.screen.lt.md
+              ? 'text-h4'
+              : 'text-h3'
+          "
+        >
           {{ post.title }}
         </div>
 
-        <p class="q-my-md text-h6 text-weight-light">
+        <p
+          class="q-my-md text-weight-light"
+          :class="
+            $q.screen.lt.sm
+              ? 'text-subtitle2'
+              : $q.screen.lt.md
+              ? 'text-subtitle1'
+              : 'text-h6'
+          "
+        >
           {{ post.text }}
         </p>
 
@@ -128,9 +149,9 @@ const $q = useQuasar();
 }
 
 .no-user:first-child {
-  .blog-content {
-    background-color: #303030;
-    color: white;
-  }
+  // .blog-content {
+  //   background-color: #303030;
+  //   color: white;
+  // }
 }
 </style>

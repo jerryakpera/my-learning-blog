@@ -1,9 +1,34 @@
 <template>
   <q-page
-    class="flex full-width justify-center q-ma-xl q-px-xl"
+    class="flex full-width justify-center"
+    :class="
+      $q.screen.gt.lg
+        ? ' q-ma-xl q-px-xl'
+        : $q.screen.gt.md
+        ? 'q-ma-xl q-px-lg'
+        : $q.screen.gt.sm
+        ? 'q-ma-lg q-px-lg'
+        : $q.screen.gt.xs
+        ? 'q-ma-md q-px-sm'
+        : 'q-mx-xs q-my-md'
+    "
     v-if="postsStore.about"
   >
-    <div class="q-px-md" style="width: 700px">
+    <div
+      class=""
+      style="width: 700px"
+      :class="
+        $q.screen.gt.lg
+          ? 'q-px-md'
+          : $q.screen.gt.md
+          ? 'q-px-md'
+          : $q.screen.gt.sm
+          ? 'q-px-md'
+          : $q.screen.gt.xs
+          ? 'q-px-sm q-mx-sm'
+          : 'q-px-md'
+      "
+    >
       <div class="text-h5">{{ postsStore.about.title }}</div>
       <div>
         {{ postsStore.about.paragraphOne }}

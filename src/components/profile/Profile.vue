@@ -3,7 +3,7 @@
     <q-card flat style="width: 450px" class="profile-card" square>
       <q-card-section class="bg-primary q-pa-md flex justify-center">
         <q-avatar size="256px" class="profile-pic">
-          <q-img :src="profile.photo.url" />
+          <q-img :src="profile.photo.url" fit="cover" height="100%" />
         </q-avatar>
       </q-card-section>
       <q-card-section class="text-center q-mt-md">

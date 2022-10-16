@@ -19,6 +19,9 @@ onMounted(async () => {
     let posts = await postsStore.getPosts();
     posts = await postsStore.loadPosts(posts);
 
+    const categories = await postsStore.getCategories();
+    postsStore.categories = await postsStore.loadCategories(categories);
+
     postsStore.posts = [...posts];
     postsStore.featuredPosts = [...posts].splice(0, 2);
     postsStore.recentPosts = [...posts].splice(2);

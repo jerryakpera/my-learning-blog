@@ -1,27 +1,83 @@
 <template>
-  <q-page class="q-px-xl" v-if="post && post.title">
-    <div class="q-px-md">
-      <div class="text-h6">
-        {{ post.title }}
-      </div>
-      <div class="text-h6">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-        voluptatem excepturi tenetur veniam pariatur. Delectus beatae modi,
-        eligendi unde sequi temporibus facilis dignissimos eaque? Eum iure sunt
-        numquam itaque sequi adipisci possimus natus dolores. Culpa dignissimos
-        impedit alias, illo sed cumque eligendi delectus incidunt voluptatem
-        maiores mollitia, accusamus deleniti aspernatur.
+  <q-page
+    v-if="post && post.title"
+    :class="
+      $q.screen.gt.md
+        ? 'q-px-xl q-mx-md q-py-md'
+        : $q.screen.gt.sm
+        ? 'q-px-lg q-mx-sm q-py-md'
+        : $q.screen.gt.xs
+        ? 'q-px-md q-mx-xs q-py-md'
+        : 'q-px-sm'
+    "
+  >
+    <div class="row q-col-gutter-sm">
+      <div
+        :class="
+          $q.screen.gt.lg
+            ? 'col-9'
+            : $q.screen.gt.md
+            ? 'col-9'
+            : $q.screen.gt.sm
+            ? 'col-8'
+            : 'col-12'
+        "
+      >
+        <div class="text-h6">{{ post.title }}</div>
+        <q-card class="q-my-none">
+          <q-img :src="post.featuredImage.url" class="post-img" />
+        </q-card>
+        <ProfileDialog :slug="post.author.slug" :name="post.author.name" />
+        <div class="q-mb-lg">
+          {{ moment(new Date(post.createdAt)).format("LL") }}
+        </div>
+        <div v-html="post.content.html" class="text-body1"></div>
 
-        {{ content }}
+        <Categories :categories="post.categories" />
+      </div>
+
+      <div
+        :class="
+          $q.screen.gt.lg
+            ? 'col-3'
+            : $q.screen.gt.md
+            ? 'col-3'
+            : $q.screen.gt.sm
+            ? 'col-4'
+            : 'col-12 row'
+        "
+      >
+        <div
+          class="q-mb-md"
+          v-if="postsStore.categories && postsStore.categories.length > 0"
+        >
+          <div class="text-h6 col-12 q-mt-none">All Categories</div>
+          <Categories :categories="postsStore.categories" />
+        </div>
+
+        <div class="text-h6 col-12 q-mt-none">Recent Posts</div>
+        <div
+          class="col-12 col-lg-3 col-md-4 col-sm-6"
+          v-for="(post, i) in postsStore.recentPosts.splice(0, 4)"
+          :key="i"
+        >
+          <BlogCard :post="post" />
+        </div>
       </div>
     </div>
   </q-page>
 </template>
 
 <script setup>
-import { computed, onMounted } from "vue";
+import moment from "moment";
+
+import Categories from "src/components/Categories.vue";
+import BlogCard from "../components/blog/BlogCard.vue";
+import ProfileDialog from "src/components/profile/ProfileDialog.vue";
+
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
+import { computed, onMounted, ref, toRef, watch } from "vue";
 
 import { usePostsStore } from "src/stores/posts-store";
 
@@ -33,20 +89,9 @@ const postsStore = usePostsStore();
 
 const post = computed(() => postsStore.post);
 
-const getContentFragment = () => {};
-
-const content = computed(() => {
-  const data = postsStore.post.content.raw.children.map((typeObj, index) => {
-    const children = typeObj.childred.map((item, itemIndex) =>
-      getContentFragment(itemIndex, item.text)
-    );
-
-    return getContentFragment(index, children, typeObj, typeObj.type);
-  });
-});
-
 const fetchPost = async (slug) => {
   const postResult = await postsStore.getPostBySlug(slug);
+
   if (!postResult) {
     $q.notify({
       message: "Post could not be loaded",
@@ -68,3 +113,10 @@ onMounted(async () => {
   $q.loading.hide();
 });
 </script>
+
+<style lang="scss" scoped>
+img,
+.post-img {
+  max-height: 360px;
+}
+</style>

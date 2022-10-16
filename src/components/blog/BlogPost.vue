@@ -2,7 +2,10 @@
   <q-card class="blog-wrapper no-user" flat square>
     <div class="blog-content" :class="$q.screen.lt.md ? 'q-mb-xl' : ''">
       <div>
-        <div class="text-title q-my-md text-weight-bold">
+        <div
+          class="q-my-md text-weight-bold"
+          :class="$q.screen.lt.md ? 'text-subtitle1' : 'text-h6'"
+        >
           {{ post.title }}
           <div class="text-secondary text-body2 text-weight-bold">
             <ProfileDialog :name="post.author.name" :slug="post.author.slug" />

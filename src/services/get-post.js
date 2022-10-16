@@ -5,7 +5,7 @@ const graphqlAPI = process.env.ENDPOINT;
 export const getPost = async (slug) => {
   const query = gql`
     query Assets {
-      postsConnection {
+      postsConnection(where: { slug: "${slug}" }) {
         edges {
           node {
             content {
@@ -25,6 +25,10 @@ export const getPost = async (slug) => {
             author {
               slug
               name
+            }
+            categories {
+              name
+              slug
             }
           }
         }

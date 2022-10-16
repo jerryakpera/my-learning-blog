@@ -19,6 +19,14 @@ const routes = [
         },
       },
       {
+        path: "categories/:slug",
+        component: () => import("pages/CategoriesBlog.vue"),
+        props: true,
+        meta: {
+          title: "Category",
+        },
+      },
+      {
         path: "blog",
         component: () => import("pages/Blog.vue"),
         meta: {

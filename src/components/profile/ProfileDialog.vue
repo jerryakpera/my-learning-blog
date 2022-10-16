@@ -3,7 +3,8 @@
     <q-btn
       :label="name"
       flat
-      class="text-body2 q-px-none q-py-none q-mt-none"
+      class="text-body2 q-px-none q-py-none q-mt-none text-weight-bold"
+      color="primary"
       no-caps
       @click="openProfile(slug)"
     />
