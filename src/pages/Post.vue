@@ -8,32 +8,40 @@
         ? 'q-px-lg q-mx-sm q-py-md'
         : $q.screen.gt.xs
         ? 'q-px-md q-mx-xs q-py-md'
-        : 'q-px-sm'
+        : 'q-px-sm q-my-md'
     "
   >
     <div class="row q-col-gutter-sm">
       <div
         :class="
           $q.screen.gt.lg
-            ? 'col-9'
+            ? 'col-9 q-pr-md'
             : $q.screen.gt.md
-            ? 'col-9'
+            ? 'col-9 q-pr-md'
             : $q.screen.gt.sm
-            ? 'col-8'
-            : 'col-12'
+            ? 'col-8 q-pr-md'
+            : 'col-12 q-pr-sm'
         "
       >
         <div class="text-h6">{{ post.title }}</div>
+
         <q-card class="q-my-none">
           <q-img :src="post.featuredImage.url" class="post-img" />
         </q-card>
+
         <ProfileDialog :slug="post.author.slug" :name="post.author.name" />
-        <div class="q-mb-lg">
+        <div class="q-mb-sm">
           {{ moment(new Date(post.createdAt)).format("LL") }}
         </div>
+
+        <Categories
+          :categories="post.categories"
+          class="q-px-none q-mx-none q-my-sm"
+        />
+
         <div v-html="post.content.html" class="text-body1"></div>
 
-        <Categories :categories="post.categories" />
+        <Comment class="q-my-lg" :postSlug="post.slug" />
       </div>
 
       <div
@@ -48,11 +56,19 @@
         "
       >
         <div
-          class="q-mb-md"
+          class="q-mb-md full-width"
           v-if="postsStore.categories && postsStore.categories.length > 0"
         >
-          <div class="text-h6 col-12 q-mt-none">All Categories</div>
-          <Categories :categories="postsStore.categories" />
+          <q-card class="full-width" style="width: 100%" flat bordered>
+            <q-toolbar>
+              <q-toolbar-title class="text-subtitle1 text-weight-bold">
+                All Categories
+              </q-toolbar-title>
+            </q-toolbar>
+            <q-card-section class="q-pa-sm">
+              <Categories :categories="postsStore.categories" />
+            </q-card-section>
+          </q-card>
         </div>
 
         <div class="text-h6 col-12 q-mt-none">Recent Posts</div>
@@ -71,8 +87,9 @@
 <script setup>
 import moment from "moment";
 
+import Comment from "src/components/Comment.vue";
 import Categories from "src/components/Categories.vue";
-import BlogCard from "../components/blog/BlogCard.vue";
+import BlogCard from "src/components/blog/BlogCard.vue";
 import ProfileDialog from "src/components/profile/ProfileDialog.vue";
 
 import { useQuasar } from "quasar";
@@ -88,9 +105,15 @@ const router = useRouter();
 const postsStore = usePostsStore();
 
 const post = computed(() => postsStore.post);
+const slug = computed(() => props.slug);
 
 const fetchPost = async (slug) => {
   const postResult = await postsStore.getPostBySlug(slug);
+
+  let posts = await postsStore.getPosts();
+  posts = await postsStore.loadPosts(posts);
+
+  postsStore.recentPosts = [...posts].splice(0, 4);
 
   if (!postResult) {
     $q.notify({
@@ -104,6 +127,10 @@ const fetchPost = async (slug) => {
 
   postsStore.post = postResult;
 };
+
+watch(slug, async (current, old) => {
+  await fetchPost(current);
+});
 
 onMounted(async () => {
   $q.loading.show();

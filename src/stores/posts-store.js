@@ -99,5 +99,21 @@ export const usePostsStore = defineStore("post", {
         throw err;
       }
     },
+
+    async loadAppData() {
+      let posts = await this.getPosts();
+      posts = await this.loadPosts(posts);
+
+      const categories = await this.getCategories();
+      this.categories = await this.loadCategories(categories);
+
+      this.posts = [...posts];
+      this.featuredPosts = [...posts].splice(0, 2);
+      this.recentPosts = [...posts].splice(0, 2);
+
+      this.welcomeScreen = await this.getWelcomeScreen();
+
+      this.about = await this.getAboutDetails();
+    },
   },
 });

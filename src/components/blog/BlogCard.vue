@@ -16,7 +16,7 @@
 
     <q-card-actions class="q-px-md q-pb-md">
       <q-space />
-      <router-link :to="`/post/${post.slug}`">
+      <router-link :to="`/post/${post.slug}`" style="text-decoration: none">
         <q-btn
           label="View Post"
           icon-right="las la-arrow-right"
@@ -24,6 +24,7 @@
           size="sm"
           unelevated
           rounded
+          style="text-decoration: none"
         />
       </router-link>
     </q-card-actions>

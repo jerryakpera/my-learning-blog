@@ -40,14 +40,6 @@ const routes = [
           title: "About",
         },
       },
-      {
-        path: "profile/:slug",
-        component: () => import("pages/Profile.vue"),
-        props: true,
-        meta: {
-          title: "Profile",
-        },
-      },
 
       {
         path: "contact",
