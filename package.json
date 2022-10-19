@@ -2,7 +2,7 @@
   "name": "movies-blog",
   "version": "0.0.1",
   "description": "A movies blog",
-  "productName": "Movies Blog",
+  "productName": "Pashys Blog",
   "author": "Jeremiah Akpera <jerryakpera@gmail.com>",
   "private": true,
   "scripts": {
