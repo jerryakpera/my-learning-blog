@@ -11,8 +11,12 @@ export const getAbout = async () => {
             featuredImage {
               url
             }
-            paragraphTwo
-            paragraphOne
+            paragraphTwo {
+              html
+            }
+            paragraphOne {
+              html
+            }
             title
           }
         }
