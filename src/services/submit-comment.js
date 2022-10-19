@@ -8,9 +8,9 @@ export const submitComment = async (commentObj) => {
   try {
     const response = await axios.post(commentsAPI, commentObj);
 
-    console.log({ response });
     return response;
   } catch (err) {
+    console.log(err);
     throw err;
   }
 };

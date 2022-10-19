@@ -55,6 +55,7 @@ module.exports = configure(function (/* ctx */) {
         MESSAGING_SENDER_ID: process.env.MESSAGING_SENDER_ID,
         APP_ID: process.env.APP_ID,
         COMMENTS_DEV_API: process.env.COMMENTS_DEV_API,
+        COMMENTS_PROD_API: process.env.COMMENTS_PROD_API,
       },
 
       vueRouterMode: "history", // available values: 'hash', 'history'
