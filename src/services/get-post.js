@@ -30,6 +30,12 @@ export const getPost = async (slug) => {
               name
               slug
             }
+            comments {
+              comment
+              email
+              name
+              createdAt
+            }
           }
         }
       }

@@ -41,7 +41,9 @@
 
         <div v-html="post.content.html" class="text-body1"></div>
 
-        <Comment class="q-my-lg" :postSlug="post.slug" />
+        <CreateComment class="q-my-lg" :postSlug="post.slug" />
+
+        <Comments :slug="post.slug" />
       </div>
 
       <div
@@ -59,19 +61,13 @@
           class="q-mb-md full-width"
           v-if="postsStore.categories && postsStore.categories.length > 0"
         >
-          <q-card class="full-width" style="width: 100%" flat bordered>
-            <q-toolbar>
-              <q-toolbar-title class="text-subtitle1 text-weight-bold">
-                All Categories
-              </q-toolbar-title>
-            </q-toolbar>
-            <q-card-section class="q-pa-sm">
-              <Categories :categories="postsStore.categories" />
-            </q-card-section>
-          </q-card>
+          <div>
+            <div class="text-subtitle2">All Categories</div>
+            <Categories :categories="postsStore.categories" />
+          </div>
         </div>
 
-        <div class="text-h6 col-12 q-mt-none">Recent Posts</div>
+        <div class="text-subtitle2 col-12 q-mt-none">Recent Posts</div>
         <div
           class="col-12 col-lg-3 col-md-4 col-sm-6"
           v-for="(post, i) in postsStore.recentPosts.splice(0, 4)"
@@ -87,9 +83,10 @@
 <script setup>
 import moment from "moment";
 
-import Comment from "src/components/Comment.vue";
+import Comments from "src/components/Comments.vue";
 import Categories from "src/components/Categories.vue";
 import BlogCard from "src/components/blog/BlogCard.vue";
+import CreateComment from "src/components/CreateComment.vue";
 import ProfileDialog from "src/components/profile/ProfileDialog.vue";
 
 import { useQuasar } from "quasar";

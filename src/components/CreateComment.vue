@@ -19,6 +19,7 @@
             v-model="comment"
             :rules="[isRequired, maxLength, noLink]"
             counter
+            ref="commentRef"
           />
         </div>
         <div class="col-12 col-sm-6">
@@ -27,6 +28,8 @@
             standout="bg-teal text-white"
             label="Name"
             :rules="[isRequired]"
+            ref="nameRef"
+            v-model="name"
           />
         </div>
         <div class="col-12 col-sm-6">
@@ -35,6 +38,15 @@
             standout="bg-teal text-white"
             label="Email"
             :rules="[isRequired]"
+            v-model="email"
+            ref="emailRef"
+          />
+        </div>
+
+        <div class="col-12">
+          <q-checkbox
+            v-model="saveData"
+            label="Save my name and email for the next time I comment"
           />
         </div>
       </div>
@@ -55,9 +67,20 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { submitComment } from "../services/submit-comment";
 
+import { useQuasar } from "quasar";
+import { computed, onMounted, ref } from "vue";
+import { useConfirmation } from "src/common";
+
+const $q = useQuasar();
+
+const name = ref("");
+const email = ref("");
 const comment = ref("");
+const saveData = ref(false);
+
+const props = defineProps(["postSlug"]);
 
 const emailRegex = new RegExp(
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -78,7 +101,72 @@ const noLink = computed(
   () => (val) => !urlRegex.test(val) || "No links allowed"
 );
 
-const handleCommentSubmission = async () => {};
+const commentRef = ref(null);
+const nameRef = ref(null);
+const emailRef = ref(null);
+
+const handleCommentSubmission = async () => {
+  nameRef.value.validate();
+  emailRef.value.validate();
+  commentRef.value.validate();
+
+  if (
+    nameRef.value.hasError ||
+    emailRef.value.hasError ||
+    commentRef.value.hasError
+  ) {
+    return;
+  }
+
+  const confirmed = await useConfirmation($q.dialog, "Add comment?");
+  if (!confirmed) return;
+
+  const newComment = {
+    name: name.value,
+    email: email.value,
+    comment: comment.value,
+    slug: props.postSlug,
+  };
+
+  if (saveData.value) {
+    localStorage.setItem(
+      "comment-details",
+      JSON.stringify({
+        name: newComment.name,
+        email: newComment.email,
+      })
+    );
+  } else {
+    localStorage.removeItem("comment-details");
+  }
+
+  $q.loading.show();
+
+  try {
+    const result = await submitComment(newComment);
+
+    $q.notify({
+      message: "Comment submitted for review",
+      color: "positive",
+    });
+  } catch (err) {
+    $q.notify({
+      message: "Something went wrong. Please try again",
+      color: "negative",
+    });
+  }
+
+  $q.loading.hide();
+};
+
+onMounted(() => {
+  const commentDetails = JSON.parse(localStorage.getItem("comment-details"));
+
+  if (commentDetails && commentDetails.name) {
+    name.value = commentDetails.name;
+    email.value = commentDetails.email;
+  }
+});
 </script>
 
 <style></style>

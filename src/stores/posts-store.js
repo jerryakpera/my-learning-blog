@@ -5,6 +5,7 @@ import {
   getPost,
   getAbout,
   getPosts,
+  getComments,
   getCategories,
   getWelcomeScreen,
   getPostsByCategory,
@@ -68,9 +69,29 @@ export const usePostsStore = defineStore("post", {
         });
     },
 
+    async loadResults(results) {
+      return results
+        .map((result) => result.node)
+        .sort((a, b) => b.createdAt > a.createdAt)
+        .map((result) => {
+          return {
+            ...result,
+            date: moment(new Date(result.createdAt)).format("LL"),
+          };
+        });
+    },
+
     async getPostsByCategory(slug) {
       try {
         return await getPostsByCategory(slug);
+      } catch (err) {
+        throw err;
+      }
+    },
+
+    async getCommentsForPost(slug) {
+      try {
+        return await getComments(slug);
       } catch (err) {
         throw err;
       }
