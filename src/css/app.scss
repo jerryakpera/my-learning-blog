@@ -1,1 +1,14 @@
 // app global css in SCSS form
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700&family=Poiret+One&family=Raleway:wght@100;200;300;400;500;600&display=swap");
+
+.font-heading {
+  font-family: "Poiret One", cursive;
+}
+
+.font-body {
+  font-family: "Montserrat", sans-serif;
+}
+
+.font-link {
+  font-family: "Raleway", sans-serif;
+}
