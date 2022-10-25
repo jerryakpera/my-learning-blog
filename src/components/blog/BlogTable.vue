@@ -8,7 +8,7 @@
     :rows-per-page-options="[8]"
     :pagination="pagination"
   >
-    <template v-slot:top-right>
+    <template v-slot:top-right v-if="!sidebar">
       <q-input
         borderless
         dense
@@ -24,9 +24,26 @@
 
     <template v-slot:item="props">
       <div
-        class="col-xs-6 col-sm-4 col-md-3 col-lg-3 grid-style-transition q-gutter-xs"
-        :style="props.selected ? 'transform: scale(0.95);' : ''"
-        :class="$q.screen.lt.sm ? 'q-pa-sm' : 'q-pa-md '"
+        class="grid-style-transition q-gutter-xs"
+        :class="
+          $q.screen.gt.lg
+            ? 'col-3 q-pa-md'
+            : $q.screen.gt.md
+            ? 'col-3 q-pa-sm'
+            : $q.screen.gt.sm
+            ? 'col-4 q-pa-sm'
+            : $q.screen.lt.sm
+            ? 'col-6 q-pa-xs'
+            : 'col-6 q-pa-sm '
+        "
+        v-if="!sidebar"
+      >
+        <AltBlogCard :post="props.row" />
+      </div>
+      <div
+        class="grid-style-transition q-gutter-xs q-my-sm"
+        :class="$q.screen.lt.md ? 'col-4 q-pr-sm' : 'col-12'"
+        v-else
       >
         <AltBlogCard :post="props.row" />
       </div>
@@ -83,7 +100,7 @@ import AltBlogCard from "src/components/blog/AltBlogCard.vue";
 
 import { ref, computed } from "vue";
 
-const props = defineProps(["posts"]);
+const props = defineProps(["posts", "sidebar"]);
 
 const filter = ref();
 const current = ref(1);

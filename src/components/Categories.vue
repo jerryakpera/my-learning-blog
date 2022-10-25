@@ -8,10 +8,11 @@
     >
       <q-chip
         square
-        color="secondary"
+        color="dark"
+        text-color="accent"
         dark
-        class="text-weight-bold text-font-one"
-        style="text-decoration: none"
+        class="text-weight-bold text-font-one q-px-lg"
+        style="text-decoration: none; border-radius: 15px"
       >
         {{ category.name }}
       </q-chip>

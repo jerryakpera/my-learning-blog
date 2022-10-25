@@ -32,7 +32,12 @@
 
       <q-space />
 
-      <q-btn flat round>
+      <q-btn
+        flat
+        round
+        href="https://web.facebook.com/profile.php?id=100073563129524"
+        target="_blank"
+      >
         <Icon icon="brandico:facebook-rect" class="text-grey-8 text-h5" />
       </q-btn>
     </q-toolbar>

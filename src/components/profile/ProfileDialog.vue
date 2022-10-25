@@ -1,18 +1,15 @@
 <template>
-  <div>
-    <q-btn
-      :label="name"
-      flat
-      class="text-body2 q-px-none q-py-none q-mt-none text-weight-bold"
-      color="primary"
-      no-caps
+  <span>
+    <span
+      class="cursor-pointer font-body text-dark text-weight-bold"
       @click="openProfile(slug)"
-    />
+    >
+      {{ name }}
+    </span>
 
     <q-dialog v-model="dialog">
       <q-card>
         <q-card-section class="row items-center">
-          <!-- <div class="text-h6">{{ title }}</div> -->
           <q-space />
 
           <q-btn icon="las la-times" flat round dense v-close-popup />
@@ -24,7 +21,7 @@
         />
       </q-card>
     </q-dialog>
-  </div>
+  </span>
 </template>
 
 <script setup>

@@ -12,7 +12,10 @@
     "
   >
     <div class="row q-col-gutter-sm">
-      <div
+      <q-card
+        flat
+        bordered
+        class="bg-secondary q-my-md"
         :class="
           $q.screen.gt.lg
             ? 'col-9 q-pr-md'
@@ -23,28 +26,43 @@
             : 'col-12 q-pr-sm'
         "
       >
-        <div class="text-h6">{{ post.title }}</div>
+        <q-card-section>
+          <ResponsiveHeading>{{ post.title }}</ResponsiveHeading>
+          <ResponsiveLabel class="q-mb-sm">
+            by
+            <ProfileDialog :slug="post.author.slug" :name="post.author.name" />
+            {{ moment(new Date(post.createdAt)).format("LL") }}
+          </ResponsiveLabel>
 
-        <q-card class="q-my-none">
-          <q-img :src="post.featuredImage.url" class="post-img" />
-        </q-card>
+          <q-card class="q-my-md" flat bordered>
+            <q-img :src="post.featuredImage.url" class="post-img" />
+          </q-card>
 
-        <ProfileDialog :slug="post.author.slug" :name="post.author.name" />
-        <div class="q-mb-sm">
-          {{ moment(new Date(post.createdAt)).format("LL") }}
+          <Categories
+            :categories="post.categories"
+            class="q-px-none q-mx-none q-my-sm"
+          />
+
+          <div v-html="post.content.html" class="text-body1"></div>
+        </q-card-section>
+
+        <div class="flex justify-end q-my-md">
+          <q-btn
+            :href="facebookURL"
+            target="_black"
+            color="dark"
+            unelevated
+            text-color="accent"
+          >
+            Share
+            <Icon icon="brandico:facebook-rect" class="q-ml-md" />
+          </q-btn>
         </div>
-
-        <Categories
-          :categories="post.categories"
-          class="q-px-none q-mx-none q-my-sm"
-        />
-
-        <div v-html="post.content.html" class="text-body1"></div>
 
         <CreateComment class="q-my-lg" :postSlug="post.slug" />
 
         <Comments :slug="post.slug" />
-      </div>
+      </q-card>
 
       <div
         :class="
@@ -67,13 +85,11 @@
           </div>
         </div>
 
-        <div class="text-subtitle2 col-12 q-mt-none">Recent Posts</div>
-        <div
-          class="col-12 col-lg-3 col-md-4 col-sm-6"
-          v-for="(post, i) in postsStore.recentPosts.splice(0, 4)"
-          :key="i"
+        <ResponsiveHeading class="text-subtitle2 col-12 q-mt-none"
+          >Recent Posts</ResponsiveHeading
         >
-          <BlogCard :post="post" />
+        <div class="col-12">
+          <BlogTable :posts="postsStore.recentPosts" :sidebar="true" />
         </div>
       </div>
     </div>
@@ -85,24 +101,53 @@ import moment from "moment";
 
 import Comments from "src/components/Comments.vue";
 import Categories from "src/components/Categories.vue";
-import BlogCard from "src/components/blog/BlogCard.vue";
+import BlogTable from "src/components/blog/BlogTable.vue";
 import CreateComment from "src/components/CreateComment.vue";
 import ProfileDialog from "src/components/profile/ProfileDialog.vue";
 
 import { useQuasar } from "quasar";
-import { useRouter } from "vue-router";
-import { computed, onMounted, ref, toRef, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { computed, onMounted, ref, watch } from "vue";
 
 import { usePostsStore } from "src/stores/posts-store";
 
 const props = defineProps(["slug"]);
 
 const $q = useQuasar();
+const route = useRoute();
 const router = useRouter();
 const postsStore = usePostsStore();
 
-const post = computed(() => postsStore.post);
+const url = ref("");
+const urlText = ref("Share on FB");
+const facebookURL = ref("");
+const twitterURL = ref("");
+const linkedinURL = ref("");
+
+const encodedURL = computed(() => {
+  return encodeURIComponent(url.value);
+});
+
+const encodedText = computed(() => {
+  return encodeURIComponent(urlText.value);
+});
+
 const slug = computed(() => props.slug);
+const post = computed(() => postsStore.post);
+
+const generateURLs = () => {
+  facebookURL.value =
+    "http://www.facebook.com/sharer/sharer.php?u=" +
+    encodedURL.value +
+    "&title=" +
+    encodedText.value;
+
+  // twitterURL.value =
+  //   "https://twitter.com/intent/tweet?text=" +
+  //   encodedText.value +
+  //   "&url=" +
+  //   encodedURL.value;
+};
 
 const fetchPost = async (slug) => {
   const postResult = await postsStore.getPostBySlug(slug);
@@ -130,6 +175,10 @@ watch(slug, async (current, old) => {
 });
 
 onMounted(async () => {
+  url.value = `https://pashys-blog.web.app/${route.fullPath}`;
+
+  generateURLs();
+
   $q.loading.show();
 
   await fetchPost(props.slug);

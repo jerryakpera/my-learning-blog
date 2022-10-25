@@ -7,9 +7,11 @@
 <script setup>
 import BlogTable from "../components/blog/BlogTable.vue";
 
-import { ref, computed } from "vue";
+import { useRoute } from "vue-router";
+import { ref, computed, onMounted } from "vue";
 import { usePostsStore } from "src/stores/posts-store";
 
+const route = useRoute();
 const postsStore = usePostsStore();
 
 const filter = ref();
@@ -27,5 +29,3 @@ const pagesNumber = computed(() => {
   return Math.ceil(rows.length / pagination.value.rowsPerPage);
 });
 </script>
-
-<style></style>

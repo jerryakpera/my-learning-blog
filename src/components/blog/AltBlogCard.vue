@@ -6,9 +6,9 @@
         $q.screen.gt.md
           ? 'height: 280px'
           : $q.screen.gt.sm
-          ? 'height: 220px'
+          ? 'height: 265px'
           : $q.screen.gt.xs
-          ? 'height: 205px'
+          ? 'height: 225px'
           : 'height: 180px'
       "
       fit="cover"
