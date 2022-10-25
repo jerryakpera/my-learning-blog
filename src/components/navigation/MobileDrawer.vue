@@ -15,5 +15,3 @@
 <script setup>
 const props = defineProps(["leftDrawerOpen", "links"]);
 </script>
-
-<style></style>

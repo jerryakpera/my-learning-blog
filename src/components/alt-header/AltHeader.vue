@@ -1,7 +1,7 @@
 <template>
   <q-header class="bg-accent q-py-lg">
     <q-toolbar class="q-px-md">
-      <!-- <MobileMenu class="lt-sm" :links="links" /> -->
+      <AltMobileMenu class="lt-sm" :links="links" />
 
       <q-toolbar-title shrink class="row items-center no-wrap">
         <router-link
@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
+import AltMobileMenu from "./AltMobileMenu.vue";
+
 const props = defineProps(["links"]);
 </script>
-
-<style></style>

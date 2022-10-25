@@ -14,8 +14,7 @@
       fit="cover"
     >
       <div
-        class="absolute-bottom text-subtitle2 font-body"
-        style="padding: 0 !important"
+        class="absolute-bottom text-subtitle2 font-body blog-card-content"
         :style="
           $q.screen.gt.md
             ? 'padding: 10px'
@@ -54,11 +53,20 @@ const editPost = computed(() => postsStore.editPost);
 </script>
 
 <style lang="scss" scoped>
-.blog-card-link {
+.blog-card-content {
+  background: rgba(0, 0, 0, 0.3);
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    color: white !important;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .blog-card-link {
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      color: white !important;
+    }
   }
 }
 </style>

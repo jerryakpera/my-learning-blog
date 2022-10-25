@@ -29,19 +29,22 @@
           : 'q-px-md'
       "
     >
-      <div class="text-h5">{{ postsStore.about.title }}</div>
+      <ResponsiveHeading>{{ postsStore.about.title }}</ResponsiveHeading>
 
-      <div v-html="postsStore.about.paragraphOne.html" class="text-body1"></div>
+      <ResponsiveText
+        v-html="postsStore.about.paragraphOne.html"
+        class="text-body1"
+      ></ResponsiveText>
 
       <div class="q-my-md flex justify-center">
         <q-img :src="postsStore.about.featuredImage.url" class="img" />
       </div>
 
-      <div
+      <ResponsiveText
         v-if="postsStore.about && postsStore.about.paragraphTwo"
         v-html="postsStore.about.paragraphTwo.html"
         class="text-body1"
-      ></div>
+      ></ResponsiveText>
     </div>
   </q-page>
 </template>
