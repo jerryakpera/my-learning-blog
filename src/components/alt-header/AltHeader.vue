@@ -9,8 +9,13 @@
           class="text-grey-8 font-heading text-h4"
           style="text-decoration: none"
         >
-          <span class="text-grey-10">Cherished</span>
-          <span class="text-weight-light">Life</span>
+          <div class="q-mb-none">
+            <span class="text-grey-10">Cherished</span>
+            <span class="text-weight-light">Life</span>
+          </div>
+          <ResponsiveText class="q-mt-none"
+            >A blog for the Christian female</ResponsiveText
+          >
         </router-link>
       </q-toolbar-title>
 

@@ -36,7 +36,10 @@
         class="text-body1"
       ></ResponsiveText>
 
-      <div class="q-my-md flex justify-center">
+      <div
+        class="q-my-md flex justify-center"
+        v-if="postsStore.about.featuredImage"
+      >
         <q-img :src="postsStore.about.featuredImage.url" class="img" />
       </div>
 
