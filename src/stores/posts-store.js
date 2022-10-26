@@ -129,8 +129,8 @@ export const usePostsStore = defineStore("post", {
       this.categories = await this.loadCategories(categories);
 
       this.posts = [...posts];
-      this.featuredPosts = [...posts].splice(0, 2);
-      this.recentPosts = [...posts].splice(0, 2);
+      this.featuredPosts = [...posts].splice(0, 4);
+      this.recentPosts = [...posts].splice(0, 4);
 
       this.welcomeScreen = await this.getWelcomeScreen();
 

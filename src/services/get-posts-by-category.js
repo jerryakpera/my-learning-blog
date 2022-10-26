@@ -26,7 +26,7 @@ export const getPostsByCategory = async (slug) => {
             }
             createdAt
             excerpt
-            featuredImage {
+            featuredImageOne {
               url
             }
             slug

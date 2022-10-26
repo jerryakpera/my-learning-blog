@@ -8,14 +8,28 @@ export const getPost = async (slug) => {
       postsConnection(where: { slug: "${slug}" }) {
         edges {
           node {
-            content {
-              text
+            contentOne {
               html
-              markdown
-              raw
-              json
             }
-            featuredImage {
+            featuredImageOne {
+              url
+            }
+            contentTwo {
+              html
+            }
+            featuredImageTwo {
+              url
+            }
+            contentThree {
+              html
+            }
+            featuredImageThree {
+              url
+            }
+            contentFour {
+              html
+            }
+            featuredImageFour {
               url
             }
             id

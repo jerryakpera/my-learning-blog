@@ -35,7 +35,11 @@
           </ResponsiveLabel>
 
           <q-card class="q-my-md" flat bordered>
-            <q-img :src="post.featuredImage.url" class="post-img" />
+            <q-img
+              :src="post.featuredImageOne.url"
+              class="post-img"
+              fit="cover"
+            />
           </q-card>
 
           <Categories
@@ -43,7 +47,46 @@
             class="q-px-none q-mx-none q-my-sm"
           />
 
-          <div v-html="post.content.html" class="text-body1"></div>
+          <div v-html="post.contentOne.html" class="text-body1"></div>
+
+          <q-card class="q-my-md" flat bordered v-if="post.featuredImageTwo">
+            <q-img
+              :src="post.featuredImageTwo.url"
+              class="post-img"
+              fit="cover"
+            />
+          </q-card>
+          <div
+            v-html="post.contentTwo.html"
+            class="text-body1"
+            v-if="post.contentTwo"
+          ></div>
+
+          <q-card class="q-my-md" flat bordered v-if="post.featuredImageThree">
+            <q-img
+              :src="post.featuredImageThree.url"
+              class="post-img"
+              fit="cover"
+            />
+          </q-card>
+          <div
+            v-html="post.contentThree.html"
+            class="text-body1"
+            v-if="post.contentThree"
+          ></div>
+
+          <q-card class="q-my-md" flat bordered v-if="post.featuredImageFour">
+            <q-img
+              :src="post.featuredImageFour.url"
+              class="post-img"
+              fit="cover"
+            />
+          </q-card>
+          <div
+            v-html="post.contentFour.html"
+            class="text-body1"
+            v-if="post.contentFour"
+          ></div>
         </q-card-section>
 
         <div class="flex justify-end q-my-md">
@@ -56,6 +99,18 @@
           >
             Share
             <Icon icon="brandico:facebook-rect" class="q-ml-md" />
+          </q-btn>
+
+          <q-btn
+            :href="twitterURL"
+            target="_black"
+            color="dark"
+            unelevated
+            text-color="accent"
+            class="q-ml-sm"
+          >
+            Share
+            <Icon icon="entypo-social:twitter" class="q-ml-md" />
           </q-btn>
         </div>
 
@@ -135,6 +190,8 @@ const encodedText = computed(() => {
 const slug = computed(() => props.slug);
 const post = computed(() => postsStore.post);
 
+const fitModes = ["cover", "fill", "contain", "none", "scale-down"];
+
 const generateURLs = () => {
   facebookURL.value =
     "http://www.facebook.com/sharer/sharer.php?u=" +
@@ -142,11 +199,11 @@ const generateURLs = () => {
     "&title=" +
     encodedText.value;
 
-  // twitterURL.value =
-  //   "https://twitter.com/intent/tweet?text=" +
-  //   encodedText.value +
-  //   "&url=" +
-  //   encodedURL.value;
+  twitterURL.value =
+    "https://twitter.com/intent/tweet?text=" +
+    encodedText.value +
+    "&url=" +
+    encodedURL.value;
 };
 
 const fetchPost = async (slug) => {
@@ -183,13 +240,23 @@ onMounted(async () => {
 
   await fetchPost(props.slug);
 
+  route.matched.map((r, i) => {
+    document.title = `CherishedLife | ${post.value.title}`;
+  });
+
   $q.loading.hide();
 });
 </script>
 
 <style lang="scss" scoped>
-img,
 .post-img {
-  max-height: 360px;
+  max-height: 400px;
+}
+
+.post-image {
+  height: 400px;
+  border-radius: 7px;
+  background-size: cover;
+  background-position: center;
 }
 </style>

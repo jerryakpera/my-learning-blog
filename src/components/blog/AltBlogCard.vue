@@ -1,7 +1,7 @@
 <template>
   <q-card class="blog-card bg-secondary" bordered flat>
     <q-img
-      :src="post.featuredImage.url"
+      :src="post.featuredImageOne.url"
       :style="
         $q.screen.gt.md
           ? 'height: 280px'

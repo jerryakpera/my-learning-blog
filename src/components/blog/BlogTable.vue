@@ -5,6 +5,7 @@
     row-key="name"
     :filter="filter"
     hide-header
+    :title="title || ''"
     :rows-per-page-options="[8]"
     :pagination="pagination"
   >
@@ -100,7 +101,7 @@ import AltBlogCard from "src/components/blog/AltBlogCard.vue";
 
 import { ref, computed } from "vue";
 
-const props = defineProps(["posts", "sidebar"]);
+const props = defineProps(["posts", "sidebar", "title"]);
 
 const filter = ref();
 const current = ref(1);

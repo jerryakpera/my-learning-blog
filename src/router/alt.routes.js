@@ -5,6 +5,7 @@ const routes = [
     children: [
       {
         path: "",
+        name: "Home",
         component: () => import("pages/AltHome.vue"),
         meta: {
           title: "Home",
@@ -12,6 +13,7 @@ const routes = [
       },
       {
         path: "post/:slug",
+        name: "Post",
         component: () => import("pages/Post.vue"),
         props: true,
         meta: {
@@ -20,6 +22,7 @@ const routes = [
       },
       {
         path: "categories/:slug",
+        name: "Categories",
         component: () => import("pages/CategoriesBlog.vue"),
         props: true,
         meta: {
@@ -28,6 +31,7 @@ const routes = [
       },
       {
         path: "blog",
+        name: "Blog",
         component: () => import("pages/Blog.vue"),
         meta: {
           title: "Blog",
@@ -35,6 +39,7 @@ const routes = [
       },
       {
         path: "about",
+        name: "About",
         component: () => import("pages/About.vue"),
         meta: {
           title: "About",
@@ -43,6 +48,7 @@ const routes = [
 
       {
         path: "contact",
+        name: "Contact Me",
         component: () => import("pages/Contact.vue"),
         meta: {
           title: "Contact",

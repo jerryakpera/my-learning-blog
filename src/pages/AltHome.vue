@@ -1,5 +1,8 @@
 <template>
   <q-page>
+    <div class="q-mt-md q-ml-sm">
+      <Categories :categories="postsStore.categories" />
+    </div>
     <BlogTable :posts="postsStore.posts" />
 
     <div class="row q-col-gutter-sm q-px-md">
@@ -39,6 +42,7 @@
 </template>
 
 <script setup>
+import Categories from "src/components/Categories.vue";
 import BlogTable from "src/components/blog/BlogTable.vue";
 
 import { usePostsStore } from "src/stores/posts-store";

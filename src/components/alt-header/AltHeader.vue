@@ -23,15 +23,47 @@
 
       <div class="q-gutter-sm row items-center no-wrap gt-xs">
         <template v-for="link in links" :key="link.text">
-          <q-btn
-            flat
-            size="sm"
-            text-color="grey-8"
-            :label="link.text"
+          <RouterLink
+            v-if="link.link"
             :to="link.link"
-            class="font-body"
+            exact
+            exact-active-class="text-grey-10"
+            class="text-grey-8"
+          >
+            <q-btn
+              flat
+              size="sm"
+              :label="link.text"
+              class="font-body"
+              style="font-size: 0.8em"
+            />
+          </RouterLink>
+          <q-btn
+            color="grey-8"
             style="font-size: 0.8em"
-          />
+            class="font-body"
+            flat
+            :label="link.text"
+            v-if="!link.link"
+          >
+            <q-menu :offset="[0, 20]">
+              <q-list style="min-width: 235px" class="bg-dark text-accent" dark>
+                <q-item
+                  exact
+                  exact-active-class="text-dark bg-accent"
+                  clickable
+                  v-close-popup
+                  v-for="category in categories"
+                  :key="category.name"
+                  :to="`/categories/${category.slug}`"
+                >
+                  <q-item-section>
+                    {{ category.name }}
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
         </template>
       </div>
 
@@ -52,5 +84,12 @@
 <script setup>
 import AltMobileMenu from "./AltMobileMenu.vue";
 
+import { usePostsStore } from "src/stores/posts-store";
+import { computed } from "vue";
+
 const props = defineProps(["links"]);
+
+const postsStore = usePostsStore();
+
+const categories = computed(() => postsStore.categories);
 </script>

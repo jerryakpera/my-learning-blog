@@ -18,7 +18,6 @@ onMounted(async () => {
   try {
     await postsStore.loadAppData();
   } catch (err) {
-    console.log(err);
     $q.notify({
       message: err,
       color: "dark",

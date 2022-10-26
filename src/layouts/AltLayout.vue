@@ -11,10 +11,18 @@
 </template>
 
 <script setup>
-import AltHeader from "src/components/alt-header/AltHeader.vue";
-
 import Footer from "src/components/footer/Footer.vue";
 import Header from "src/components/navigation/Header.vue";
+import AltHeader from "src/components/alt-header/AltHeader.vue";
+
+import { onMounted, watch, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { usePostsStore } from "src/stores/posts-store";
+
+const route = useRoute();
+const router = useRouter();
+
+const postsStore = usePostsStore();
 
 const links = [
   {
@@ -27,6 +35,9 @@ const links = [
     link: "/about",
   },
   {
+    text: "Categories",
+  },
+  {
     text: "Blog",
     link: "/blog",
   },
@@ -35,4 +46,37 @@ const links = [
     link: "/contact",
   },
 ];
+
+const currentPath = computed(() => route.path);
+
+const getCategory = () => {
+  const fullPath = route.fullPath.split("/");
+  const slug = fullPath[2];
+
+  return postsStore.categories.find((cat) => cat.slug === slug);
+};
+
+const setSiteTitle = () => {
+  route.matched.map((r, i) => {
+    let { path, name } = r;
+
+    if (name === "Categories") {
+      const cat = getCategory();
+
+      document.title = `CherishedLife | ${cat ? cat.name : "Category"}`;
+      return;
+    }
+
+    document.title = `CherishedLife | ${name}`;
+  });
+};
+
+watch(currentPath, (current, old) => {
+  setSiteTitle();
+});
+
+onMounted(async () => {
+  await router.isReady();
+  setSiteTitle();
+});
 </script>

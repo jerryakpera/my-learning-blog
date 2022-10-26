@@ -26,7 +26,7 @@ export const getPosts = async () => {
             }
             createdAt
             excerpt
-            featuredImage {
+            featuredImageOne {
               url
             }
             slug
