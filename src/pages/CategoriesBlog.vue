@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-px-xl">
+  <q-page class="q-px-xl" :key="componentKey">
     <BlogTable :posts="postsStore.categoryPosts" :title="title" v-if="title" />
   </q-page>
 </template>
@@ -8,7 +8,7 @@
 import BlogTable from "../components/blog/BlogTable.vue";
 
 import { useQuasar } from "quasar";
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { usePostsStore } from "src/stores/posts-store";
 
 const props = defineProps(["slug"]);
@@ -18,6 +18,7 @@ const postsStore = usePostsStore();
 
 const filter = ref();
 const current = ref(1);
+const componentKey = ref(0);
 
 const _slug = computed(() => props.slug);
 
@@ -40,11 +41,11 @@ const title = computed(() => {
   return `Categories | ${catName || "Posts"}`;
 });
 
-onMounted(async () => {
+const getPostsInCategories = async (slug) => {
   $q.loading.show();
 
   try {
-    let posts = await postsStore.getPostsByCategory(props.slug);
+    let posts = await postsStore.getPostsByCategory(slug);
     posts = await postsStore.loadPosts(posts);
 
     postsStore.categoryPosts = [...posts];
@@ -56,6 +57,16 @@ onMounted(async () => {
   }
 
   $q.loading.hide();
+};
+
+watch(_slug, async (current, old) => {
+  await getPostsInCategories(current);
+  componentKey.value += 1;
+});
+
+onMounted(async () => {
+  await getPostsInCategories(props.slug);
+  componentKey.value += 1;
 });
 </script>
 

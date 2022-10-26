@@ -1,8 +1,5 @@
 <template>
   <q-page>
-    <div class="q-mt-md q-ml-sm">
-      <Categories :categories="postsStore.categories" />
-    </div>
     <BlogTable :posts="postsStore.posts" />
 
     <div class="row q-col-gutter-sm q-px-md">
