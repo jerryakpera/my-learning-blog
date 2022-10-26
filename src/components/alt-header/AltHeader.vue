@@ -29,6 +29,7 @@
             exact
             exact-active-class="text-grey-10"
             class="text-grey-8"
+            style="text-decoration-none"
           >
             <q-btn
               flat
