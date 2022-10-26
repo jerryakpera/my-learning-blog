@@ -31,14 +31,13 @@ export const usePostsStore = defineStore("post", {
 
     async loadPosts(posts) {
       return posts
-        .map((post) => post.node)
-        .sort((a, b) => b.createdAt > a.createdAt)
         .map((post) => {
           return {
-            ...post,
-            date: moment(new Date(post.createdAt)).format("LL"),
+            ...post.node,
+            date: moment(new Date(post.node.createdAt)).format("LL"),
           };
-        });
+        })
+        .reverse();
     },
 
     async getPosts() {
@@ -127,13 +126,10 @@ export const usePostsStore = defineStore("post", {
       const categories = await this.getCategories();
       this.categories = await this.loadCategories(categories);
 
-      this.posts = [...posts].sort((a, b) => b.createdAt > a.createdAt);
-      this.featuredPosts = [...posts]
-        .splice(0, 4)
-        .sort((a, b) => b.createdAt > a.createdAt);
-      this.recentPosts = [...posts]
-        .splice(0, 4)
-        .sort((a, b) => b.createdAt > a.createdAt);
+      this.posts = [...posts];
+      this.featuredPosts = [...posts].splice(0, 4);
+
+      this.recentPosts = [...posts].splice(0, 4);
 
       this.welcomeScreen = await this.getWelcomeScreen();
 
