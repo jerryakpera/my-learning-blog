@@ -72,7 +72,6 @@ export const usePostsStore = defineStore("post", {
     async loadResults(results) {
       return results
         .map((result) => result.node)
-        .sort((a, b) => b.createdAt > a.createdAt)
         .map((result) => {
           return {
             ...result,
@@ -128,9 +127,13 @@ export const usePostsStore = defineStore("post", {
       const categories = await this.getCategories();
       this.categories = await this.loadCategories(categories);
 
-      this.posts = [...posts];
-      this.featuredPosts = [...posts].splice(0, 4);
-      this.recentPosts = [...posts].splice(0, 4);
+      this.posts = [...posts].sort((a, b) => b.createdAt > a.createdAt);
+      this.featuredPosts = [...posts]
+        .splice(0, 4)
+        .sort((a, b) => b.createdAt > a.createdAt);
+      this.recentPosts = [...posts]
+        .splice(0, 4)
+        .sort((a, b) => b.createdAt > a.createdAt);
 
       this.welcomeScreen = await this.getWelcomeScreen();
 
