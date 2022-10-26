@@ -10,6 +10,7 @@
         ? 'q-px-md q-mx-xs q-py-md'
         : 'q-px-sm q-my-md'
     "
+    :key="componentKey"
   >
     <div class="row q-col-gutter-sm">
       <q-card
@@ -174,10 +175,11 @@ const router = useRouter();
 const postsStore = usePostsStore();
 
 const url = ref("");
-const urlText = ref("Share on FB");
-const facebookURL = ref("");
 const twitterURL = ref("");
 const linkedinURL = ref("");
+const componentKey = ref(0);
+const facebookURL = ref("");
+const urlText = ref("Share on FB");
 
 const encodedURL = computed(() => {
   return encodeURIComponent(url.value);
@@ -229,6 +231,7 @@ const fetchPost = async (slug) => {
 
 watch(slug, async (current, old) => {
   await fetchPost(current);
+  componentKey.value += 1;
 });
 
 onMounted(async () => {
@@ -243,6 +246,7 @@ onMounted(async () => {
   route.matched.map((r, i) => {
     document.title = `CherishedLife | ${post.value.title}`;
   });
+  componentKey.value += 1;
 
   $q.loading.hide();
 });
