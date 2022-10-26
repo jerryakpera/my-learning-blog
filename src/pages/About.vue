@@ -61,10 +61,6 @@ const postsStore = usePostsStore();
 <style lang="scss" scoped>
 .img {
   border-radius: 10px;
-  // border-top-right-radius: 10px;
-  // display: block;
-  // width: 100%;
-  // height: 100%;
   object-fit: cover;
 }
 </style>

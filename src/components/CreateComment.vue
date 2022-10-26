@@ -56,7 +56,8 @@
       <q-space class="gt-xs" />
 
       <q-btn
-        color="primary"
+        color="dark"
+        text-color="accent"
         label="Leave Comment"
         :class="$q.screen.lt.sm ? 'full-width' : ''"
         @click="handleCommentSubmission"

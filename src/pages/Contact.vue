@@ -3,18 +3,17 @@
     class="flex full-width"
     :class="
       $q.screen.gt.lg
-        ? ' q-ma-xl q-px-xl flex-center'
+        ? ' q-ma-xl q-px-xl justify-center'
         : $q.screen.gt.md
-        ? 'q-ma-xl q-px-lg flex-center'
+        ? 'q-ma-xl q-px-lg justify-center'
         : $q.screen.gt.sm
-        ? 'q-ma-lg q-px-lg flex-center '
+        ? 'q-ma-lg q-px-lg justify-center '
         : $q.screen.gt.xs
         ? 'q-ma-md q-px-sm justify-center'
         : 'q-mx-xs q-my-md justify-center'
     "
   >
     <div
-      class=""
       style="width: 700px"
       :class="
         $q.screen.gt.lg
@@ -28,23 +27,34 @@
           : 'q-px-md'
       "
     >
-      <div class="text-h5">Get in touch</div>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur
-      dolor quaerat, asperiores eveniet magnam earum! Fuga sit quibusdam fugiat
-      nesciunt!
+      <ResponsiveHeading>{{ postsStore.contact.title }}</ResponsiveHeading>
+      <ResponsiveText>
+        {{ postsStore.contact.content }}
+      </ResponsiveText>
       <div class="row q-col-gutter-sm q-mt-md">
         <div class="col-12 col-sm-6">
-          <q-input label="Name" outlined v-model="name" />
+          <q-input label="Name" outlined v-model="name" class="font-body" />
         </div>
         <div class="col-12 col-sm-6">
-          <q-input label="Email" outlined />
+          <q-input label="Email" outlined class="font-body" v-model="email" />
         </div>
         <div class="col-12">
-          <q-input label="Comment" outlined type="textarea" />
+          <q-input
+            label="Comment"
+            outlined
+            type="textarea"
+            class="font-body"
+            v-model="comment"
+          />
         </div>
 
         <div class="full-width flex">
-          <q-btn label="Submit" class="full-width" color="primary" />
+          <q-btn
+            label="Submit"
+            class="full-width"
+            color="dark"
+            text-color="accent"
+          />
         </div>
       </div>
     </div>
@@ -54,5 +64,11 @@
 <script setup>
 import { ref } from "vue";
 
+import { usePostsStore } from "src/stores/posts-store";
+
+const postsStore = usePostsStore();
+
 const name = ref("");
+const email = ref("");
+const comment = ref("");
 </script>

@@ -12,6 +12,15 @@ export const getComments = async (slug) => {
             createdAt
             email
             name
+            commentReply {
+              createdAt
+              comment {
+                html
+              }
+              author {
+                name
+              }
+            }
           }
         }
       }

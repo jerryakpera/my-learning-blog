@@ -214,7 +214,9 @@ const fetchPost = async (slug) => {
   let posts = await postsStore.getPosts();
   posts = await postsStore.loadPosts(posts);
 
-  postsStore.recentPosts = [...posts].splice(0, 4);
+  postsStore.recentPosts = [...posts]
+    .filter((pst) => pst.slug !== props.slug)
+    .splice(0, 4);
 
   if (!postResult) {
     $q.notify({
@@ -246,6 +248,7 @@ onMounted(async () => {
   route.matched.map((r, i) => {
     document.title = `CherishedLife | ${post.value.title}`;
   });
+
   componentKey.value += 1;
 
   $q.loading.hide();

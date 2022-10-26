@@ -5,6 +5,7 @@ import {
   getPost,
   getAbout,
   getPosts,
+  getContact,
   getComments,
   getCategories,
   getWelcomeScreen,
@@ -14,14 +15,15 @@ import {
 export const usePostsStore = defineStore("post", {
   state: () => ({
     posts: [],
+    post: null,
+    about: null,
+    contact: null,
     categories: [],
+    editPost: false,
     recentPosts: [],
     featuredPosts: [],
     categoryPosts: [],
     welcomeScreen: null,
-    editPost: false,
-    about: null,
-    post: null,
   }),
 
   actions: {
@@ -105,7 +107,15 @@ export const usePostsStore = defineStore("post", {
 
     async getAboutDetails() {
       try {
-        return (await getAbout()) || [];
+        return await getAbout();
+      } catch (err) {
+        throw err;
+      }
+    },
+
+    async getContactDetails() {
+      try {
+        return await getContact();
       } catch (err) {
         throw err;
       }
@@ -134,6 +144,7 @@ export const usePostsStore = defineStore("post", {
       this.welcomeScreen = await this.getWelcomeScreen();
 
       this.about = await this.getAboutDetails();
+      this.contact = await this.getContactDetails();
     },
   },
 });
