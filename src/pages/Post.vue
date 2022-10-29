@@ -40,6 +40,8 @@
               :src="post.featuredImageOne.url"
               class="post-img"
               fit="cover"
+              position="10% 35%"
+              style="min-height: 550px"
             />
           </q-card>
 
@@ -55,6 +57,8 @@
               :src="post.featuredImageTwo.url"
               class="post-img"
               fit="cover"
+              position="10% 35%"
+              style="min-height: 550px"
             />
           </q-card>
           <div
@@ -68,6 +72,8 @@
               :src="post.featuredImageThree.url"
               class="post-img"
               fit="cover"
+              position="10% 35%"
+              style="min-height: 550px"
             />
           </q-card>
           <div
@@ -81,6 +87,8 @@
               :src="post.featuredImageFour.url"
               class="post-img"
               fit="cover"
+              position="10% 35%"
+              style="min-height: 550px"
             />
           </q-card>
           <div

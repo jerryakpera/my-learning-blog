@@ -11,7 +11,7 @@
           bordered
           class="q-mb-md"
         >
-          <q-card class="q-pa-sm text-dark bg-grey-4" flat bordered>
+          <q-card class="q-pa-sm text-dark bg-grey-3" flat bordered>
             <div>
               <ResponsiveLabel>
                 <span class="text-weight-bold text-caption">
