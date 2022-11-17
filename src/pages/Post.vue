@@ -254,7 +254,7 @@ onMounted(async () => {
   await fetchPost(props.slug);
 
   route.matched.map((r, i) => {
-    document.title = `CherishedLife | ${post.value.title}`;
+    document.title = post.value.title;
   });
 
   componentKey.value += 1;
