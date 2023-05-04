@@ -5,7 +5,7 @@ const graphqlAPI = process.env.ENDPOINT;
 export const getPosts = async () => {
   const query = gql`
     query Assets {
-      postsConnection {
+      postsConnection(first: 100) {
         edges {
           node {
             categories {

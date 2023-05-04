@@ -146,6 +146,8 @@ const handleCommentSubmission = async () => {
   try {
     const result = await submitComment(newComment);
 
+    comment.value = "";
+
     $q.notify({
       message: "Comment submitted for review",
       color: "positive",
