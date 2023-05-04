@@ -3,8 +3,6 @@
 </template>
 
 <script setup>
-import { getAbout } from "src/services/get-about";
-
 import { onMounted } from "vue";
 import { useQuasar } from "quasar";
 import { usePostsStore } from "src/stores/posts-store";

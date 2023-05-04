@@ -39,7 +39,6 @@
 </template>
 
 <script setup>
-import Categories from "src/components/Categories.vue";
 import BlogTable from "src/components/blog/BlogTable.vue";
 
 import { usePostsStore } from "src/stores/posts-store";

@@ -5,14 +5,10 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-
-    <!-- <Footer :links="links" /> -->
   </q-layout>
 </template>
 
 <script setup>
-import Footer from "src/components/footer/Footer.vue";
-import Header from "src/components/navigation/Header.vue";
 import AltHeader from "src/components/alt-header/AltHeader.vue";
 
 import { onMounted, watch, computed } from "vue";
