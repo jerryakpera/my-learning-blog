@@ -145,6 +145,18 @@
         >
           <div>
             <div class="text-subtitle2">All Categories</div>
+            <SFacebook
+              @popup-open="onOpen"
+              @popup-close="onClose"
+              @popup-block="onBlock"
+              @popup-focus="onFocus"
+              :share-options="shareOptions"
+              :window-features="windowFeatures"
+              :use-native-behavior="useNativeBehavior"
+            >
+              <!-- your icon component -->
+              <q-btn label="Share" />
+            </SFacebook>
             <Categories :categories="postsStore.categories" />
           </div>
         </div>
@@ -162,6 +174,7 @@
 
 <script setup>
 import moment from "moment";
+import { SFacebook } from "vue-socials";
 
 import Comments from "src/components/Comments.vue";
 import Categories from "src/components/Categories.vue";
@@ -201,6 +214,19 @@ const slug = computed(() => props.slug);
 const post = computed(() => postsStore.post);
 
 const fitModes = ["cover", "fill", "contain", "none", "scale-down"];
+
+const onOpen = () => {};
+const onClose = () => {};
+const onBlock = () => {};
+const onFocus = () => {};
+
+const shareOptions = {
+  url: "https://pashys-blog.web.app/post/psalms-one-four-five-verse-four",
+  quote: "Quote",
+  hashtag: "#CherishedLife",
+};
+const windowFeatures = {};
+const useNativeBehavior = false;
 
 const generateURLs = () => {
   facebookURL.value =
