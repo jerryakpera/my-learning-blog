@@ -1,5 +1,6 @@
 import { getPost } from "./get-post";
 import { getPosts } from "./get-posts";
+import { getBooks } from "./get-books";
 import { getAbout } from "./get-about";
 import { getAuthor } from "./get-author";
 import { getContact } from "./get-contact";
@@ -12,6 +13,7 @@ export {
   getPost,
   getAbout,
   getPosts,
+  getBooks,
   getAuthor,
   getContact,
   getComments,

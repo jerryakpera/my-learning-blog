@@ -6,7 +6,7 @@ const routes = [
       {
         path: "",
         name: "Home",
-        component: () => import("pages/AltHome.vue"),
+        component: () => import("pages/IndexPage.vue"),
         meta: {
           title: "Home",
         },
@@ -43,6 +43,14 @@ const routes = [
         component: () => import("pages/About.vue"),
         meta: {
           title: "About",
+        },
+      },
+      {
+        path: "books",
+        name: "Books",
+        component: () => import("pages/BooksPage.vue"),
+        meta: {
+          title: "Books",
         },
       },
 

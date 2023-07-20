@@ -38,6 +38,10 @@ const links = [
     link: "/blog",
   },
   {
+    text: "Books",
+    link: "/books",
+  },
+  {
     text: "Contact",
     link: "/contact",
   },

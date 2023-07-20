@@ -4,6 +4,7 @@ import moment from "moment";
 import {
   getPost,
   getAbout,
+  getBooks,
   getPosts,
   getContact,
   getComments,
@@ -14,13 +15,16 @@ import {
 
 export const usePostsStore = defineStore("post", {
   state: () => ({
+    books: [],
     posts: [],
     post: null,
     about: null,
+    allPosts: [],
     contact: null,
     categories: [],
     editPost: false,
     recentPosts: [],
+    dailyVerses: [],
     featuredPosts: [],
     categoryPosts: [],
     welcomeScreen: null,
@@ -42,9 +46,28 @@ export const usePostsStore = defineStore("post", {
         .reverse();
     },
 
+    async loadBooks(books) {
+      return books
+        .map((book) => {
+          return {
+            ...book.node,
+            date: moment(new Date(book.node.createdAt)).format("LL"),
+          };
+        })
+        .reverse();
+    },
+
     async getPosts() {
       try {
         return (await getPosts()) || [];
+      } catch (err) {
+        throw err;
+      }
+    },
+
+    async getBooks() {
+      try {
+        return (await getBooks()) || [];
       } catch (err) {
         throw err;
       }
@@ -129,22 +152,48 @@ export const usePostsStore = defineStore("post", {
       }
     },
 
+    getPostCategories(post) {
+      const { categories } = post;
+      return categories
+        .map((category) => category.name.toLowerCase())
+        .join(", ");
+    },
+
     async loadAppData() {
-      let posts = await this.getPosts();
-      posts = await this.loadPosts(posts);
+      try {
+        let posts = await this.getPosts();
+        let books = await this.getBooks();
 
-      const categories = await this.getCategories();
-      this.categories = await this.loadCategories(categories);
+        posts = await this.loadPosts(posts);
+        books = await this.loadPosts(books);
 
-      this.posts = [...posts];
-      this.featuredPosts = [...posts].splice(0, 4);
+        this.books = [...books];
 
-      this.recentPosts = [...posts].splice(0, 4);
+        const categories = await this.getCategories();
+        this.categories = await this.loadCategories(categories);
 
-      this.welcomeScreen = await this.getWelcomeScreen();
+        this.allPosts = [...posts].filter((post) => {});
+        this.featuredPosts = [...posts].splice(0, 4);
 
-      this.about = await this.getAboutDetails();
-      this.contact = await this.getContactDetails();
+        this.posts = posts.filter((post) => {
+          const categoriesStr = this.getPostCategories(post);
+          return !categoriesStr.includes("your daily verse");
+        });
+
+        this.recentPosts = [...this.posts].splice(0, 4);
+
+        this.dailyVerses = posts.filter((post) => {
+          const categoriesStr = this.getPostCategories(post);
+          return categoriesStr.includes("your daily verse");
+        });
+
+        this.welcomeScreen = await this.getWelcomeScreen();
+
+        this.about = await this.getAboutDetails();
+        this.contact = await this.getContactDetails();
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 });

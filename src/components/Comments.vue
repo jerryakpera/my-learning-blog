@@ -15,29 +15,29 @@
             <div>
               <ResponsiveLabel>
                 <span class="text-weight-bold text-caption">
-                  {{ comment.name }}
+                  {{ comment?.name }}
                 </span>
                 <span class="text-caption text-grey-10">
-                  on {{ comment.date }}
+                  on {{ comment?.date }}
                 </span>
               </ResponsiveLabel>
 
               <ResponsiveText>
-                {{ comment.comment }}
+                {{ comment?.comment }}
               </ResponsiveText>
             </div>
 
             <q-separator spaced="md" />
 
-            <div v-if="comment.commentReply" class="q-mt-md">
+            <div v-if="comment?.commentReply" class="q-mt-md">
               <ResponsiveLabel>
                 <span class="text-primary text-weight-bold">
-                  {{ comment.commentReply.author.name }}
+                  {{ comment?.commentReply?.author?.name }}
                 </span>
                 <span class="text-caption text-grey-10">
                   on
                   {{
-                    moment(new Date(comment.commentReply.createdAt)).format(
+                    moment(new Date(comment?.commentReply?.createdAt)).format(
                       "LL"
                     )
                   }}
@@ -45,7 +45,7 @@
               </ResponsiveLabel>
 
               <ResponsiveText
-                v-html="comment.commentReply.comment.html"
+                v-html="comment?.commentReply?.comment?.html"
               ></ResponsiveText>
             </div>
           </q-card>

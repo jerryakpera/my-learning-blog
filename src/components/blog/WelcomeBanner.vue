@@ -1,12 +1,17 @@
 <template>
-  <q-card class="blog-wrapper no-user bg-dark" flat square>
+  <q-card
+    flat
+    square
+    class="blog-wrapper no-user"
+    style="background-color: #d0e7dc"
+  >
     <div
-      class="blog-content bg-dark text-white"
+      class="blog-content text-black"
       :class="$q.screen.lt.md ? 'q-mb-xl' : ''"
     >
       <div :class="$q.screen.lt.md ? 'q-pa-lg' : ''">
         <div
-          class="q-ma-none q-pa-none"
+          class="q-ma-none q-pa-none text-weight-bold"
           :class="
             $q.screen.lt.sm
               ? 'text-h5'

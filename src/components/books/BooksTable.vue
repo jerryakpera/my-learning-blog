@@ -1,0 +1,111 @@
+<template>
+  <q-table
+    grid
+    :rows="[...books]"
+    row-key="name"
+    :filter="filter"
+    hide-header
+    :title="title || ''"
+    :rows-per-page-options="[8]"
+    :pagination="pagination"
+  >
+    <template v-slot:top-right>
+      <q-input
+        borderless
+        dense
+        debounce="300"
+        v-model="filter"
+        placeholder="Search"
+      >
+        <template v-slot:append>
+          <q-icon name="search" />
+        </template>
+      </q-input>
+    </template>
+
+    <template v-slot:item="props">
+      <div
+        class="grid-style-transition q-gutter-xs"
+        :class="
+          $q.screen.gt.lg
+            ? 'col-4 q-pa-md'
+            : $q.screen.gt.md
+            ? 'col-4 q-pa-sm'
+            : $q.screen.gt.sm
+            ? 'col-4 q-pa-sm'
+            : $q.screen.lt.sm
+            ? 'col-12 q-pa-xs'
+            : 'col-12 q-pa-sm'
+        "
+      >
+        <BookCard :book="props.row" />
+      </div>
+    </template>
+
+    <template v-slot:pagination="scope">
+      <q-btn
+        v-if="scope.pagesNumber > 2"
+        icon="first_page"
+        color="grey-8"
+        round
+        dense
+        flat
+        :disable="scope.isFirstPage"
+        @click="scope.firstPage"
+      />
+
+      <q-btn
+        icon="chevron_left"
+        color="grey-8"
+        round
+        dense
+        flat
+        :disable="scope.isFirstPage"
+        @click="scope.prevPage"
+      />
+
+      <q-btn
+        icon="chevron_right"
+        color="grey-8"
+        round
+        dense
+        flat
+        :disable="scope.isLastPage"
+        @click="scope.nextPage"
+      />
+
+      <q-btn
+        v-if="scope.pagesNumber > 2"
+        icon="last_page"
+        color="grey-8"
+        round
+        dense
+        flat
+        :disable="scope.isLastPage"
+        @click="scope.lastPage"
+      />
+    </template>
+  </q-table>
+</template>
+
+<script setup>
+import BookCard from "./BookCard.vue";
+
+import { ref, computed } from "vue";
+
+const props = defineProps(["books", "title"]);
+
+const filter = ref();
+const current = ref(1);
+
+const pagination = ref({
+  page: 1,
+  sortBy: "desc",
+  rowsPerPage: 12,
+  descending: false,
+});
+
+const pagesNumber = computed(() => {
+  return Math.ceil(rows.length / pagination.value.rowsPerPage);
+});
+</script>

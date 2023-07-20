@@ -83,13 +83,13 @@
 </template>
 
 <script setup>
-import AltMobileMenu from "./AltMobileMenu.vue";
-
-import { usePostsStore } from "src/stores/posts-store";
 import { computed } from "vue";
 
-const props = defineProps(["links"]);
+import { usePostsStore } from "src/stores/posts-store";
 
+import AltMobileMenu from "./AltMobileMenu.vue";
+
+const props = defineProps(["links"]);
 const postsStore = usePostsStore();
 
 const categories = computed(() => postsStore.categories);
