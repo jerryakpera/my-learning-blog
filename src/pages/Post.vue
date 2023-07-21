@@ -145,7 +145,8 @@
         >
           <div>
             <div class="text-subtitle2">All Categories</div>
-            <SFacebook
+            <!-- your icon component inside -->
+            <!-- <SFacebook
               @popup-open="onOpen"
               @popup-close="onClose"
               @popup-block="onBlock"
@@ -154,9 +155,8 @@
               :window-features="windowFeatures"
               :use-native-behavior="useNativeBehavior"
             >
-              <!-- your icon component -->
               <q-btn label="Share" />
-            </SFacebook>
+            </SFacebook> -->
             <Categories :categories="postsStore.categories" />
           </div>
         </div>
@@ -221,7 +221,7 @@ const onBlock = () => {};
 const onFocus = () => {};
 
 const shareOptions = {
-  url: "https://pashys-blog.web.app/post/psalms-one-four-five-verse-four",
+  url: window.location.pathname,
   quote: "Quote",
   hashtag: "#CherishedLife",
 };
